@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './app.css'
+import { Apps, SearchBox, SearchBar, Main, Location, Dates, WeatherBox, Weather, Temp } from './App.elements';
 
 const api = {
   key: "ee60336db3c9bef5a094517accdfd392",
@@ -34,10 +34,10 @@ function App() {
 
   return (
     <>
-      <div className={(typeof weather.main != "undefined") ? ((weather.main.temp > 16) ? 'appwarm' : 'app') : 'app'}>
-        <main>
-          <div className="search-box">
-            <input
+      <Apps>
+        <Main>
+          <SearchBox>
+            <SearchBar
               type="text"
               className="search-bar"
               placeholder="Search...."
@@ -45,23 +45,25 @@ function App() {
               value={query}
               onKeyPress={search}
             />
-          </div>
+          </SearchBox>
           {(typeof weather.main != "undefined") ? (
             <div>
               <div className="location-box">
-                <div className="location">{weather.name}, {weather.sys.country}</div>
-                <div className="date">{dateBuilder(new Date())}</div>
+                <Location>{weather.name}, {weather.sys.country}</Location>
+                <Dates>{dateBuilder(new Date())}</Dates>
               </div>
-              <div className="weather-box">
-                <div className="temp">{Math.round(weather.main.temp)}°c</div>
-                <div className="weather">{weather.weather[0].main}</div>
-              </div>
+              <WeatherBox>
+                <Temp>{Math.round(weather.main.temp)}°c</Temp>
+                <Weather>{weather.weather[0].main}</Weather>
+              </WeatherBox>
             </div>
           ) : ('')}
-        </main>
-      </div>
+        </Main>
+      </Apps>
     </>
   )
 }
 
 export default App;
+
+
